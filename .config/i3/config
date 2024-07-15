@@ -44,7 +44,7 @@ set $ws10 "10"
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nitrogen --restore
-exec --no-startup-id picom -b --experimental-backend -C 
+exec --no-startup-id picom -b
 #exec --no-stalwaysartup-id picom
 exec_always --no-startup-id killall i3-auto-tiling; i3-auto-tiling
 exec --no-startup-id dunst
