@@ -1,4 +1,5 @@
 # My Linux Configuration
+![screenshot](dotfiles.png)
 ## Base
 - Distro: Arch Linux
 - Shell: fish
