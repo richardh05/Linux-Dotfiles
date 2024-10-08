@@ -8,10 +8,11 @@ application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoff
 
 [Added Associations]
 image/png=gpicview.desktop;org.kde.pix.desktop;firefox.desktop;
-application/zip=userapp-unzip-Q6UZO2.desktop;
+application/zip=xarchiver.desktop;
 text/plain=kitty.desktop;kitty-open.desktop;fish.desktop;
-image/jpeg=feh.desktop;gpicview.desktop;
+image/jpeg=org.kde.pix.desktop;feh.desktop;gpicview.desktop;
 text/html=firefox.desktop;
 text/csv=code.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
-application/vnd.kde.kxmlguirc=kitty.desktop;
+application/vnd.kde.kxmlguirc=kitty-open.desktop;kitty.desktop;
+application/sql=code.desktop;
