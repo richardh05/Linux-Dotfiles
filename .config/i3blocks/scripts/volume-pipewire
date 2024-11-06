@@ -1,5 +1,6 @@
 #!/bin/bash
 # Displays the default device, volume, and mute status for i3blocks
+# https://github.com/vivien/i3blocks-contrib/tree/master/volume-pipewire
 
 set -a
 

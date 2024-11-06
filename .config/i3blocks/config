@@ -2,44 +2,47 @@ command=$SCRIPT_DIR/$BLOCK_NAME
 separator_block_width=15
 markup=pango
 
-[memory]
-command=$SCRIPT_DIR/memory
-label= 
-interval=30
-color=#b16286
+#[memory]
+#command=$SCRIPT_DIR/memory
+#label= 
+#interval=30
+#color=#b16286
 
-#[cpu_usage]
-#command=/home/richard/.config/i3blocks/scripts/cpu_usage
-#label= 
-#color=#458588
-#interval=10 
+[cpu_usage]
+command=$SCRIPT_DIR/cpu_usage
+label=  
+interval=10 
+COLOR_NORMAL=#b16286
+#COLOR_WARN=#FFFC00
+#COLOR_CRIT=#FF0000
+DECIMALS=0
 
-[cpu_usage2]
-command=$SCRIPT_DIR/cpu_usage2
-markup=pango
-interval=persist
-#min_width=CPU 100.00%
-#REFRESH_TIME=1
-#LABEL=CPU 
-#WARN_PERCENT=50
-#CRIT_PERCENT=80
-#DECIMALS=2
-
-[battery]
-command=/home/richard/.config/i3blocks/scripts/battery-poly
-label= 
-interval=10
-color=#d79921
+[brightness]
+command=~/bin/brightness%.sh
+label=  
+#format=%i%
+interval=once
+signal=1
+color=#458588
 
 [volume]
 command=$SCRIPT_DIR/volume-pipewire
-#label=♪ 
-color=#98971a
 interval=once
 signal=1
+DEFAULT_COLOR=#98971a
+#MUTED_COLOR="#a0a0a0"
+USE_DESCRIPTION=0
+SHORT_FORMAT="${SYMB}${VOL}%"
+LONG_FORMAT="${SYMB}${VOL}%"
+
+[battery]
+command=$SCRIPT_DIR/battery-poly 1.0 .0%
+label=  
+interval=10
+color=#d79921
 
 [time]
-command=date '+%Y-%m-%d %H:%M:%S'
+command=date '+%d %b %Y %H:%M'
 label= 
 color=#d65d0e
-interval=1
+interval=10

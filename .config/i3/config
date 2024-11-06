@@ -173,7 +173,9 @@ bindsym XF86AudioRaiseVolume --release exec pkill -RTMIN+1 i3blocks
 
 # Brightness controls
 bindsym XF86MonBrightnessUp exec brightnessctl set +5% -e
+bindsym XF86MonBrightnessUp --release exec pkill -RTMIN+1 i3blocks
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%- -e
+bindsym XF86MonBrightnessDown --release exec pkill -RTMIN+1 i3blocks
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
