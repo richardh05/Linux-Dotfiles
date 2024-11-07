@@ -46,7 +46,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id picom -b
 #exec --no-stalwaysartup-id picom
-exec_always --no-startup-id killall i3-auto-tiling; i3-auto-tiling
+exec_always --no-startup-id autotiling
 exec --no-startup-id dunst
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -131,8 +131,8 @@ bindsym Control+Shift+Escape exec kitty htop
 bindsym Print exec flameshot full -c -p ~/Screenshots/
 bindsym Shift+Print exec flameshot gui
 bindsym Mod4+Shift+period exec --no-startup-id xrandr --output HDMI-2 --auto --left-of eDP-1
-bindsym Mod4+d exec --no-startup-id rofi -show drun
-#bindsym Mod4+d exec dmenu_run
+#bindsym Mod4+d exec --no-startup-id rofi -show drun
+bindsym Mod4+d exec ~/bin/rmenu
 bindsym Mod4+p exec keepassxc
 
 # === ASSIGN APPS ===

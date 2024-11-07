@@ -19,7 +19,7 @@ DECIMALS=0
 
 [brightness]
 command=~/bin/brightness%.sh
-label=  
+label=󰃟  
 #format=%i%
 interval=once
 signal=1
@@ -43,6 +43,6 @@ color=#d79921
 
 [time]
 command=date '+%d %b %Y %H:%M'
-label= 
+label=  
 color=#d65d0e
 interval=10
