@@ -42,7 +42,13 @@ interval=10
 color=#d79921
 
 [time]
-command=date '+%d %b %Y %H:%M'
+command=date '+%H:%M'
+label=󰥔  
+color=#FFA066
+interval=10
+
+[date]
+command=date '+%d %b %Y'
 label=  
 color=#d65d0e
-interval=10
+interval=60

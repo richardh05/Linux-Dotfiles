@@ -20,3 +20,6 @@ application/vnd.kde.kxmlguirc=kitty-open.desktop;kitty.desktop;
 application/sql=code.desktop;
 application/x-desktop=kitty.desktop;
 application/x-zerosize=nvim.desktop;
+text/markdown=nvim.desktop;
+application/x-shellscript=nvim.desktop;
+application/xml=nvim.desktop;
