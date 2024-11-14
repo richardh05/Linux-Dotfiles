@@ -8,6 +8,15 @@ markup=pango
 #interval=30
 #color=#b16286
 
+[window_title]
+command=~/bin/i3-focusedwindow
+interval=1
+label= 
+signal=1
+color=#C5C9C5
+#align = left
+#min_width=450
+
 [cpu_usage]
 command=$SCRIPT_DIR/cpu_usage
 label=  
@@ -18,7 +27,7 @@ COLOR_NORMAL=#b16286
 DECIMALS=0
 
 [brightness]
-command=~/bin/brightness%.sh
+command=~/bin/getbrightness
 label=󰃟  
 #format=%i%
 interval=once

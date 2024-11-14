@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Author: Kn
+# Source: https://github.com/vivien/i3blocks-contrib/tree/master/i3-focusedwindow
+
+ID=$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')
+if [[ $1 ]] 
+then
+	TITLE=$(xprop -id $ID -len $1 | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)
+else
+	TITLE=$(xprop -id $ID | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2)
+fi
+
+NEWTITLE=$(echo "$TITLE" | sed 's/ — Mozilla Firefox//g')
+echo "$NEWTITLE"
+

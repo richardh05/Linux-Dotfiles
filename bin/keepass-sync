@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+LINUXDB="/home/richard/Documents/KeePass Vault/Passwords.kdbx"
+PHONEDB="/run/user/1000/gvfs/mtp:host=Google_Pixel_5_0C101FDD4003DV/Internal shared storage/Documents/KeePass/Passwords.kdbx"
+LINUXDIR=$(dirname "$LINUXDB")
+cp "$PHONEDB" "$LINUXDIR/.stversions/"
+#keepassxc-cli merge -s "$LINUXDB" "$PHONEDB"
+#rm "$PHONEDB"
+#cp "$LINUXDB" "$PHONEDB"

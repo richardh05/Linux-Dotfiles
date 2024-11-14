@@ -1,5 +1,6 @@
 alsa-utils
 anki
+autotiling
 base
 base-devel
 brightnessctl
@@ -12,7 +13,6 @@ feh
 firefox
 fish
 flameshot
-gb-studio-bin
 gbcc-git
 git
 gpicview
@@ -22,7 +22,6 @@ gvfs
 gvfs-mtp
 htop
 hugo
-i3-auto-tiling
 i3-wm
 i3blocks
 i3lock
@@ -37,7 +36,6 @@ linux
 linux-firmware
 linux-lts
 linux-lts-headers
-lutris
 lxappearance-gtk3
 ly
 neofetch
@@ -50,6 +48,7 @@ nitrogen
 noto-fonts-emoji
 ntfs-3g
 obsidian
+onlyoffice-bin
 openvpn
 papirus-icon-theme
 picom
@@ -61,12 +60,12 @@ r
 reaper
 rofi
 rstudio-desktop-bin
+shotcut
 sof-firmware
 spotify-player-full-pipe
-steam
 stow
-stremio
 syncthing
+sysstat
 thunar
 thunar-archive-plugin
 thunar-volman
