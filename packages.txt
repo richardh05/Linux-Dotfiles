@@ -48,7 +48,6 @@ nitrogen
 noto-fonts-emoji
 ntfs-3g
 obsidian
-onlyoffice-bin
 openvpn
 papirus-icon-theme
 picom

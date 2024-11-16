@@ -1,7 +1,5 @@
 #!/bin/sh
-REPO="~/dots/home/"
-cp -f "~/.config/mimeapps.list" "$REPO.config/mimeapps.list"
-cp -f "$REPO.config/mimeapps.list" "~/.config/mimeapps.list"
+REPO='/home/richard/dots/home/'
 pacman -Qeq > ~/dots/home/packages.txt
-stow -d ~/dots/home -t ~/ .
+stow -d $REPO -t ~/ .
 cd ~/dots/home
