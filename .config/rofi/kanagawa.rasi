@@ -1,110 +1,128 @@
+//GLOBAL TWEAKS & VARIABLES
 * {
     bg-col: #282828;
     green: #689d68;
     fg-col: #bdae93;
     grey: #a89984;
+    black: #191919;
 
     width: 600;
     font: "Ubuntu Nerd Font Medium 14";
-}
-
-element-text, element-icon , mode-switcher {
-    background-color: inherit;
-    text-color:       inherit;
-}
-
-window {
-    height: 500px;
-    border: 3px;
-	border-radius: 10px;
-    bg-color: @bg-col;
+    border-radius: 10px;
     background-color: @bg-col;
 }
+
+element-text, element-icon , mode-switcher, button {
+    background-color: inherit;
+    text-color:       inherit;
+    horizontal-align: 0.5;
+    cursor: pointer;
+}
+
+
+window {
+    height: 618px;
+	border-radius: 10px;
+    padding: 5px;
+}
+
+inputbar, mainbox
+{
+    padding: 5px;
+    margin: 5px;
+}
+
+// ============
+//   INPUT BAR 
+// ============
+
+// WHOLE TOP SECTION
+inputbar {
+    children: [prompt,entry];
+    //padding: 20px;
+    //margin: 15px 0px 0px 15px;
+}
+
+// WHERE THE MODI NAME APPEARS
+prompt {
+    padding: 10px;
+    background-color: @green;
+    text-color: @bg-col;
+    border-radius: 3px;
+}
+
+//WHERE THE TYPING HAPPENS
+entry {
+    padding: 6px;
+    //margin: 20px 0px 20px 0px;
+    border: 5px 10px 5px 10px;
+    text-color: @fg-col;
+    background-color: @black;
+    cursor: text;
+}
+
+
+
+// ============
+//   MAIN BOX
+// ============
 
 mainbox {
     background-color: @bg-col;
-}
-
-inputbar {
-    children: [prompt,entry];
-    background-color: @bg-col;
-    border-radius: 5px;
-    padding: 2px;
-}
-
-prompt {
-    background-color: @green;
-    padding: 6px;
-    text-color: @bg-col;
-    border-radius: 3px;
-    margin: 20px 0px 0px 20px;
-}
-
-textbox-prompt-colon {
-    expand: false;
-    /*str: ":";*/
-}
-
-entry {
-    padding: 6px;
-    margin: 20px 0px 0px 10px;
-    text-color: @fg-col;
-    background-color: @bg-col;
+    //padding: 2px;
 }
 
 listview {
-    border: 0px 0px 0px;
-    padding: 6px 0px 0px 6px;
-    margin: 5px 20px 0px 20px;
-    columns: 1;
+    //margin: 0px 20px 0px 20px;
+    columns: 4;
+    fixedcolumns: true;
     lines: 10;
-    background-color: @bg-col;
 }
 
 element {
-    padding: 5px;
-    background-color: @bg-col;
+    border: 10px;
+    padding: 6px;
+    //spacing: 10px;
     text-color: @fg-col  ;
+    orientation: vertical;
 }
 
 element-icon {
-    size: 25px;
+    size: 45px;
+    padding: 6px;
 }
 
 element selected {
     background-color:  @fg-col ;
     text-color: @bg-col  ;
-	border-radius: 10px;
 }
 
-mode-switcher {
-    spacing: 0;
+element-text {
+    font: "Ubuntu Nerd Font 10";
+}
+
+textbox {
+    padding: 0px;
+    margin: 6px;
+    text-color: @green;
+    background-color: @black;
   }
 
+
+// ==================
+//   BOTTOM BUTTONS
+// ==================
 button {
     padding: 10px;
-    background-color: @bg-col;
+    border: 2px 5px 2px 5px;
+    border-radius: 10px;
+    background-color: @black;
     text-color: @grey;
     vertical-align: 0.5; 
     horizontal-align: 0.5;
-	border-radius: 10px;
 }
 
 button selected {
     background-color: @green;
     text-color: @bg-col;
 }
-  
-message {
-    background-color: @bg-col;
-    margin: 2px;
-    padding: 2px;
-    border-radius: 5px;
-}
-  
-textbox {
-    padding: 6px;
-    margin: 20px 0px 0px 20px;
-    text-color: @green;
-    background-color: @bg-col;
-  }
