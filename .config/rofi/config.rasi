@@ -16,4 +16,4 @@ configuration {
 	kb-cancel: "Escape,Super_L";
 }
 
-@theme "/home/richard/.config/rofi/catpuccin-frappe.rasi"
+@theme "/home/richard/.config/rofi/kanagawa.rasi"
