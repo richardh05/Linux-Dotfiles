@@ -8,18 +8,17 @@ markup=pango
 #interval=30
 #color=#b16286
 
-[window_title]
-command=~/bin/i3-focusedwindow
-interval=1
-label= 
-signal=1
-color=#C5C9C5
-#align = left
-#min_width=450
+#[window_title]
+#command=~/bin/i3-focusedwindow
+#interval=1
+#label= 
+#signal=1
+#color=#C5C9C5
 
 [cpu_usage]
 command=$SCRIPT_DIR/cpu_usage
-label=  
+label= 
+#label=CPU 
 interval=10 
 COLOR_NORMAL=#b16286
 #COLOR_WARN=#FFFC00
@@ -28,7 +27,8 @@ DECIMALS=0
 
 [brightness]
 command=~/bin/getbrightness
-label=󰃟  
+label=󰃟 
+#label=LUX 
 #format=%i%
 interval=once
 signal=1
@@ -41,12 +41,15 @@ signal=1
 DEFAULT_COLOR=#98971a
 #MUTED_COLOR="#a0a0a0"
 USE_DESCRIPTION=0
+#label=VOL 
 SHORT_FORMAT="${SYMB}${VOL}%"
 LONG_FORMAT="${SYMB}${VOL}%"
+#LONG_FORMAT=${VOL}%
 
 [battery]
 command=$SCRIPT_DIR/battery-poly 1.0 .0%
 label=  
+#label=BAT 
 interval=10
 color=#d79921
 

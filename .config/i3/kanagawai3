@@ -11,15 +11,15 @@ set $darkgray #1d2021
 set $lightgray #bdae93
 set $black #191919
 
-font pango:JetBrains Mono Nerd Font 10
-
+#font pango:JetBrains Mono Nerd Font 10
+font pango: Ubuntu Nerd Font Medium 11
 
 # --- COLOURED ELEMENTS ---
 # target            title     bg    text   indicator  border
-client.focused		$blue $blue $black $purple $blue
-client.unfocused	$black $black $blue $black #242424
-client.focused_inactive #2c3c3d $blue $black #533944 #2c3c3d
-client.placeholder	$black $bg $blue $black $bg
+client.focused		$aqua $aqua $black $purple $aqua
+client.unfocused	$black $black $aqua $black #242424
+client.focused_inactive #2c3c3d $aqua $black #533944 #2c3c3d
+client.placeholder	$black $bg $aqua $black $bg
 client.urgent		$red $red $black $red $red
 client.background	$bg
 

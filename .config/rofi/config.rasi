@@ -1,17 +1,19 @@
 configuration {
-    modi: "window,drun,ssh,combi";
-    icon-theme: "Papirus";
+    modi: "drun,filebrowser";
+    icon-theme: "Obsidian-aqua";
     show-icons: true;
-    terminal: "alacritty";
+    terminal: "kitty";
     drun-display-format: "{icon} {name}";
     location: 0;
     disable-history: false;
     hide-scrollbar: false;
-    display-drun: "Apps";
-    display-run: "Run";
-    display-window: "Window";
-    display-Network: "Network";
+    display-drun: "󰣇 Apps";
+    display-run: "󰣇 Run";
+    display-window: " Window";
+    display-Network: "󰣇 Network";
+	display-filebrowser: " Files";
     sidebar-mode: true;
+	kb-cancel: "Escape,Super_L";
 }
 
 @theme "/home/richard/.config/rofi/catpuccin-frappe.rasi"

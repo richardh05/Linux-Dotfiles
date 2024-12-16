@@ -1,29 +1,26 @@
 # i3 config file (v4)
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+
+#------------------#
+# GAPS,THEMES & BAR
+#------------------#
+
 include ~/.config/i3/kanagawai3
 default_border pixel 4
 default_floating_border pixel 5
-gaps inner 8
+#gaps inner 8
+
+# UNCOMMENT IF NOT USING A THEME VVV
+#bar {
+#	position top
+#	status_command SCRIPT_DIR=~/.config/i3blocks/scripts i3blocks
+#}
 
 
-#------------#
-# WORKSPACES
-#------------#
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
-
-#---------#
-# STARTUP
-#---------#
+#--------------#
+# STARTUP APPS
+#--------------#
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -35,17 +32,62 @@ exec --no-startup-id dunst
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 
+
+#--------------#
+# BINDED APPS
+#--------------#
+
+# use `xev -event keyboard` to find available keys
+bindsym Mod4+Return exec kitty
+bindsym Mod4+grave exec codium
+bindsym Mod4+slash exec kitty lf
+bindsym Mod4+w exec brave-browser
+bindsym Mod4+o exec obsidian 
+bindsym Control+Shift+Escape exec kitty htop
+bindsym Print exec flameshot full -c -p ~/Screenshots/
+bindsym Shift+Print exec flameshot gui
+bindsym Mod4+Shift+period exec --no-startup-id xrandr --output HDMI-2 --auto --left-of eDP-1
+bindsym Mod4+d exec --no-startup-id rofi -show drun
+#bindsym Mod4+d exec ~/bin/rmenu
+bindsym Mod4+p exec keepassxc
+
+#------------#
+# WORKSPACES
+#------------#
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+#-------------#
+# ASSIGN APPS
+#-------------#
+
+#use `xprop` to find class names. use the second, capitalised string.
+for_window [class="KeePassXC"] move scratchpad
+for_window [class="KeePassXC"] scratchpad show
+assign [class="obsidian"] $ws2
+#for_window [class="KeePassXC"] floating enable
+assign [title="spt"] $ws10
+
 #----------#
 # MOVEMENT
 #----------#
 
-# --- VARIABLES ---
+# variables
 set $left h
 set $down j
 set $up k
 set $right l
 
-# --- change focus ---
+# change focus
 bindsym Mod4+$left focus left
 bindsym Mod4+$down focus down
 bindsym Mod4+$up focus up
@@ -56,7 +98,7 @@ bindsym Mod4+Down focus down
 bindsym Mod4+Up focus up
 bindsym Mod4+Right focus right
 
-# --- move focused window ---
+# move focused window
 bindsym Mod4+Shift+$left move left
 bindsym Mod4+Shift+$down move down
 bindsym Mod4+Shift+$up move up
@@ -98,35 +140,17 @@ bindsym Mod4+Shift+minus move scratchpad
 floating_modifier Mod4
 
 # move tiling windows via drag & drop by left-clicking into the title bar, or left-clicking anywhere into the window while holding the floating modifier.
-tiling_drag modifier titlebar
+# idk why but sway dont like this, getting rid of it
+#tiling_drag modifier titlebar
 
 # --- move workspace to next monitor ---
 bindsym Mod4+period move workspace to output right
 
-# === LAUNCH APPS ===
-# use `xev -event keyboard` to find available keys
-bindsym Mod4+Return exec kitty
-bindsym Mod4+grave exec codium
-bindsym Mod4+slash exec kitty lf
-bindsym Mod4+w exec brave-browser
-bindsym Mod4+o exec obsidian 
-bindsym Control+Shift+Escape exec kitty htop
-bindsym Print exec flameshot full -c -p ~/Screenshots/
-bindsym Shift+Print exec flameshot gui
-bindsym Mod4+Shift+period exec --no-startup-id xrandr --output HDMI-2 --auto --left-of eDP-1
-#bindsym Mod4+d exec --no-startup-id rofi -show drun
-bindsym Mod4+d exec ~/bin/rmenu
-bindsym Mod4+p exec keepassxc
 
-# === ASSIGN APPS ===
-#use `xprop` to find class names. use the second, capitalised string.
-for_window [class="KeePassXC"] move scratchpad
-for_window [class="KeePassXC"] scratchpad show
-assign [class="obsidian"] $ws2
-#for_window [class="KeePassXC"] floating enable
-assign [title="spt"] $ws10
+#------------------#
+# MANAGING WINDOWS
+#------------------#
 
-# === ARRANGING WINDOWS ===
 bindsym Mod4+Shift+q kill
 bindsym Mod4+b split horizontal
 bindsym Mod4+v split vertical
@@ -146,19 +170,17 @@ bindsym Mod4+a focus parent
 #bindsym Mod4+d focus child
 
 
-# --- MULTIMEDIA ---
-bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
-bindsym XF86AudioMute --release exec pkill -RTMIN+1 i3blocks
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
-bindsym XF86AudioLowerVolume --release exec pkill -RTMIN+1 i3blocks
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
-bindsym XF86AudioRaiseVolume --release exec pkill -RTMIN+1 i3blocks
+#------------#
+# MULTIMEDIA 
+#------------#
+
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle; exec pkill -RTMIN+1 i3blocks
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%; exec pkill -RTMIN+1 i3blocks
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%; exec pkill -RTMIN+1 i3blocks
 
 # Brightness controls
-bindsym XF86MonBrightnessUp exec brightnessctl set +5% -e
-bindsym XF86MonBrightnessUp --release exec pkill -RTMIN+1 i3blocks
-bindsym XF86MonBrightnessDown exec brightnessctl set 5%- -e
-bindsym XF86MonBrightnessDown --release exec pkill -RTMIN+1 i3blocks
+bindsym XF86MonBrightnessUp exec brightnessctl set +5% -e; exec pkill -RTMIN+1 i3blocks
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%- -e; exec pkill -RTMIN+1 i3blocks
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
@@ -166,12 +188,16 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-# --- other --
+# other
 bindsym Mod4+Shift+c reload
 bindsym Mod4+Shift+r restart
 bindsym Mod4+Shift+Escape exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-# --- RESIZE ---
+
+#--------#
+# RESIZE
+#--------#
+
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 

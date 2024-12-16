@@ -1,8 +1,20 @@
 #!/bin/sh
+# a script to merge my password manager's databases on my phone and computer.
+# set these variables here VVV
 LINUXDB="/home/richard/Documents/KeePass Vault/Passwords.kdbx"
 PHONEDB="/run/user/1000/gvfs/mtp:host=Google_Pixel_5_0C101FDD4003DV/Internal shared storage/Documents/KeePass/Passwords.kdbx"
+
+# these variables will make this easier
 LINUXDIR=$(dirname "$LINUXDB")
-cp "$PHONEDB" "$LINUXDIR/.stversions/"
+PHONENAME=$(echo "$PHONEDB" | cut -d '/' -f 6 | sed 's/mtp:host=//g')
+
+#TODO: connect the phone to your laptop and test whether gio -l will show it
+
+echo "$PHONEMTP"
+
+#gio help
+#gio mount -l mtp://<phone_name>
+#cp "$PHONEDB" "$LINUXDIR/.stversions/"
 #keepassxc-cli merge -s "$LINUXDB" "$PHONEDB"
 #rm "$PHONEDB"
 #cp "$LINUXDB" "$PHONEDB"

@@ -1,15 +1,11 @@
 * {
-    bg-col:  #303446;
-    bg-col-light: #303446;
-    border-col: #303446;
-    selected-col: #303446;
-    blue: #8caaee;
-    fg-col: #c6d0f5;
-    fg-col2: #e78284;
-    grey: #737994;
+    bg-col: #282828;
+    green: #689d68;
+    fg-col: #bdae93;
+    grey: #a89984;
 
     width: 600;
-    font: "JetBrainsMono 14";
+    font: "Ubuntu Nerd Font Medium 14";
 }
 
 element-text, element-icon , mode-switcher {
@@ -20,7 +16,8 @@ element-text, element-icon , mode-switcher {
 window {
     height: 500px;
     border: 3px;
-    border-color: @border-col;
+	border-radius: 10px;
+    bg-color: @bg-col;
     background-color: @bg-col;
 }
 
@@ -36,7 +33,7 @@ inputbar {
 }
 
 prompt {
-    background-color: @blue;
+    background-color: @green;
     padding: 6px;
     text-color: @bg-col;
     border-radius: 3px;
@@ -45,7 +42,7 @@ prompt {
 
 textbox-prompt-colon {
     expand: false;
-    str: ":";
+    /*str: ":";*/
 }
 
 entry {
@@ -57,7 +54,7 @@ entry {
 
 listview {
     border: 0px 0px 0px;
-    padding: 6px 0px 0px;
+    padding: 6px 0px 0px 6px;
     margin: 10px 0px 0px 20px;
     columns: 1;
     lines: 10;
@@ -75,8 +72,9 @@ element-icon {
 }
 
 element selected {
-    background-color:  @selected-col ;
-    text-color: @fg-col2  ;
+    background-color:  @fg-col ;
+    text-color: @bg-col  ;
+	border-radius: 10px;
 }
 
 mode-switcher {
@@ -85,19 +83,20 @@ mode-switcher {
 
 button {
     padding: 10px;
-    background-color: @bg-col-light;
+    background-color: @bg-col;
     text-color: @grey;
     vertical-align: 0.5; 
     horizontal-align: 0.5;
+	border-radius: 10px;
 }
 
 button selected {
-    background-color: @bg-col;
-    text-color: @blue;
+    background-color: @green;
+    text-color: @bg-col;
 }
   
 message {
-    background-color: @bg-col-light;
+    background-color: @bg-col;
     margin: 2px;
     padding: 2px;
     border-radius: 5px;
@@ -106,6 +105,6 @@ message {
 textbox {
     padding: 6px;
     margin: 20px 0px 0px 20px;
-    text-color: @blue;
-    background-color: @bg-col-light;
+    text-color: @green;
+    background-color: @bg-col;
   }
