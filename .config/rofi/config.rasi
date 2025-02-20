@@ -3,7 +3,7 @@ configuration {
     icon-theme: "Obsidian-aqua";
     show-icons: true;
     terminal: "kitty";
-    drun-display-format: "{icon} {name}";
+    drun-display-format: "{name}";
     location: 0;
     disable-history: false;
     hide-scrollbar: false;
@@ -14,6 +14,12 @@ configuration {
 	display-filebrowser: " Files";
     sidebar-mode: true;
 	kb-cancel: "Escape,Super_L";
+
+    me-select-entry: "";
+    hover-select: true;
+    me-accept-entry: [ MousePrimary, MouseSecondary, MouseDPrimary ];
 }
 
 @theme "/home/richard/.config/rofi/kanagawa.rasi"
+
+// rofi.command: fzf --query %s --query-files %F --multi --print0 | rofi -dmenu -p %s

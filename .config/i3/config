@@ -31,6 +31,7 @@ exec_always --no-startup-id autotiling
 exec --no-startup-id dunst
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
+exec fix-monitors
 
 
 #--------------#
@@ -39,16 +40,15 @@ exec --no-startup-id nm-applet
 
 # use `xev -event keyboard` to find available keys
 bindsym Mod4+Return exec kitty
-bindsym Mod4+grave exec codium
 bindsym Mod4+slash exec kitty lf
-bindsym Mod4+w exec brave-browser
 bindsym Mod4+o exec obsidian 
 bindsym Control+Shift+Escape exec kitty htop
-bindsym Print exec flameshot full -c -p ~/Screenshots/
+bindsym Print exec flameshot full -c -p ~/Pictures/Screenshots/
 bindsym Shift+Print exec flameshot gui
-bindsym Mod4+Shift+period exec --no-startup-id xrandr --output HDMI-2 --auto --left-of eDP-1
-bindsym Mod4+d exec --no-startup-id rofi -show drun
-#bindsym Mod4+d exec ~/bin/rmenu
+bindsym Mod4+Escape exec rmenu-power
+bindsym Mod4+d exec rmenu-apps
+bindsym Mod4+Shift+d exec rofi -dmenu
+bindsym Mod4+f exec rmenu-finder
 bindsym Mod4+p exec keepassxc
 
 #------------#
@@ -144,7 +144,8 @@ floating_modifier Mod4
 #tiling_drag modifier titlebar
 
 # --- move workspace to next monitor ---
-bindsym Mod4+period move workspace to output right
+bindsym Mod4+Shift+comma move workspace to output DP-2-1
+bindsym Mod4+Shift+period move workspace to output eDp-1
 
 
 #------------------#
@@ -189,8 +190,8 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # other
-bindsym Mod4+Shift+c reload
-bindsym Mod4+Shift+r restart
+bindsym Mod4+Shift+c reload; exec fix-monitors
+bindsym Mod4+Shift+r restart; exec fix-monitors
 bindsym Mod4+Shift+Escape exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 

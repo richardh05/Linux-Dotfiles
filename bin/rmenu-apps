@@ -1,0 +1,5 @@
+#!/bin/sh
+case $RMENU in
+    rofi) rofi -show;;
+    dmenu) dmenu_run -fn 'Jetbrains Mono:bold:_xelsize=16' -nb $BG -nf $LIGHTGREY -sb $LIGHTGREY -sf $BG -p ' ';;
+esac

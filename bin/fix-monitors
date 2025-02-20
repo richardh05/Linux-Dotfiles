@@ -1,0 +1,14 @@
+#!/bin/sh
+intern=eDP-1
+extern=DP-2-1
+
+if xrandr | grep "$extern disconnected"; then
+    xrandr --output "$extern" --off --output "$intern" --auto #external disconnected
+    i3-msg '[class=".*"]' move workspace to output primary
+    nitrogen --restore
+else
+    xrandr --auto --output "$intern" --mode 1920x1080
+    xrandr --auto --output "$extern" --mode 1920x1080 --left-of "$intern"
+    nitrogen --restore
+fi
+

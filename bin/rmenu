@@ -1,8 +1,0 @@
-#!/bin/sh
-dmenu_run \
--fn 'Jetbrains Mono:bold:pixelsize=16' \
--nb '#1f1f28' \
--nf '#dcd7ba' \
--sb '#2d4f67' \
--sf '#c8c093' \
--p ' '

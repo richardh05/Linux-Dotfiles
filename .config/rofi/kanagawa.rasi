@@ -1,13 +1,15 @@
 //GLOBAL TWEAKS & VARIABLES
 * {
-    bg-col: #282828;
-    green: #689d68;
+    bg-col: ${BG};
+    //aqua: ${AQUA};
+    aqua: #689d68;
     fg-col: #bdae93;
     grey: #a89984;
     black: #191919;
 
     width: 600;
-    font: "Ubuntu Nerd Font Medium 14";
+    //font: "Ubuntu Nerd Font Medium 14";
+    font: "VictorMono Nerd Font Medium 16";
     border-radius: 10px;
     background-color: @bg-col;
 }
@@ -15,7 +17,7 @@
 element-text, element-icon , mode-switcher, button {
     background-color: inherit;
     text-color:       inherit;
-    horizontal-align: 0.5;
+    //horizontal-align: 0.5;
     cursor: pointer;
 }
 
@@ -46,7 +48,7 @@ inputbar {
 // WHERE THE MODI NAME APPEARS
 prompt {
     padding: 10px;
-    background-color: @green;
+    background-color: @aqua;
     text-color: @bg-col;
     border-radius: 3px;
 }
@@ -74,22 +76,26 @@ mainbox {
 
 listview {
     //margin: 0px 20px 0px 20px;
-    columns: 4;
-    fixedcolumns: true;
+    background-color: @black;
+    spacing: 5px;
+    columns: 1;
+    fixed-columns: true;
+    dynamic: false;
     lines: 10;
 }
 
 element {
-    border: 10px;
+    //border: 10px;
     padding: 6px;
     //spacing: 10px;
+    background-color: @black;
     text-color: @fg-col  ;
-    orientation: vertical;
+    //orientation: vertical;
 }
 
 element-icon {
-    size: 45px;
-    padding: 6px;
+    size: 25px;
+    padding: 3px;
 }
 
 element selected {
@@ -98,13 +104,14 @@ element selected {
 }
 
 element-text {
-    font: "Ubuntu Nerd Font 10";
+    font: "VictorMono Nerd Font Mono Medium 14";
+    vertical-align: 0.5;
 }
 
 textbox {
     padding: 0px;
     margin: 6px;
-    text-color: @green;
+    text-color: @aqua;
     background-color: @black;
   }
 
@@ -123,6 +130,6 @@ button {
 }
 
 button selected {
-    background-color: @green;
+    background-color: @aqua;
     text-color: @bg-col;
 }

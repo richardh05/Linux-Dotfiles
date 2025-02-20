@@ -20,25 +20,24 @@ command=$SCRIPT_DIR/cpu_usage
 label= 
 #label=CPU 
 interval=10 
-COLOR_NORMAL=#b16286
+COLOR_NORMAL=#957FB8 #purple
 #COLOR_WARN=#FFFC00
 #COLOR_CRIT=#FF0000
 DECIMALS=0
 
 [brightness]
-command=~/bin/getbrightness
+command=getbrightness
 label=󰃟 
 #label=LUX 
-#format=%i%
 interval=once
 signal=1
-color=#458588
+color=#7E9CD8 #blue
 
 [volume]
 command=$SCRIPT_DIR/volume-pipewire
 interval=once
 signal=1
-DEFAULT_COLOR=#98971a
+DEFAULT_COLOR=#76946A #green
 #MUTED_COLOR="#a0a0a0"
 USE_DESCRIPTION=0
 #label=VOL 
@@ -51,16 +50,16 @@ command=$SCRIPT_DIR/battery-poly 1.0 .0%
 label=  
 #label=BAT 
 interval=10
-color=#d79921
+color=#C0A36E #yellow
 
 [time]
 command=date '+%H:%M'
 label=󰥔  
-color=#FFA066
+color=#FFA066 #orange
 interval=10
 
 [date]
 command=date '+%d %b %Y'
 label=  
-color=#d65d0e
+color=#C34043 #red
 interval=60

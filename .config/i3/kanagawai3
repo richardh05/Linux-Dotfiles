@@ -1,25 +1,30 @@
 # --- COLOURS ---
-set $bg #282828
-set $red #cc241d
-set $green #98971a
-set $yellow #d79921
-set $blue #458588
-set $purple #b16286
+set $bg #1F1F28
+set $red #C34043
+set $orange #FFA066
+set $yellow #C0A36E
+set $green #76946A
+set $blue #7E9CD8
+set $purple #957FB8
 set $aqua #689d68
 set $gray #a89984
 set $darkgray #1d2021
-set $lightgray #bdae93
-set $black #191919
+set $fg #bdae93
+set $black #16161d
+set $select #2D4F67
 
-#font pango:JetBrains Mono Nerd Font 10
-font pango: Ubuntu Nerd Font Medium 11
+# using non-monospace sizes nerd glyphs correctly
+#font pango: AnonymicePro Nerd Font Medium 12
+font pango:JetBrains Mono Nerd Font 10
+#font pango: Ubuntu Nerd Font Medium 11
+#font pango: Tahoma Regular 11
 
 # --- COLOURED ELEMENTS ---
 # target            title     bg    text   indicator  border
 client.focused		$aqua $aqua $black $purple $aqua
-client.unfocused	$black $black $aqua $black #242424
-client.focused_inactive #2c3c3d $aqua $black #533944 #2c3c3d
-client.placeholder	$black $bg $aqua $black $bg
+client.unfocused	$black $black $aqua $black $bg
+client.focused_inactive $select $aqua $black $gray $bg
+client.placeholder	$black $BG $aqua $black $bg
 client.urgent		$red $red $black $red $red
 client.background	$bg
 
@@ -29,9 +34,9 @@ bar {
     colors {
         # Workspace Colours
         background $bg
-        focused_workspace    $lightgray $lightgray $bg
-        inactive_workspace   $darkgray $darkgray $lightgray
-        active_workspace     $darkgray $darkgray $lightgray
+        focused_workspace    $fg $fg $bg
+        inactive_workspace   $darkgray $darkgray $fg
+        active_workspace     $darkgray $darkgray $fg
         urgent_workspace     $red $red $bg
     }
 }
