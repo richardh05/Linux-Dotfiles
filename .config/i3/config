@@ -26,7 +26,7 @@ default_floating_border pixel 5
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nitrogen --restore
-exec --no-startup-id picom -b
+#exec --no-startup-id picom -b
 exec_always --no-startup-id autotiling
 exec --no-startup-id dunst
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -152,7 +152,7 @@ bindsym Mod4+Shift+period move workspace to output eDp-1
 # MANAGING WINDOWS
 #------------------#
 
-bindsym Mod4+Shift+q kill
+bindsym Mod4+q kill
 bindsym Mod4+b split horizontal
 bindsym Mod4+v split vertical
 bindsym Mod4+Shift+f fullscreen toggle
