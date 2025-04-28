@@ -1,0 +1,9 @@
+[[keymaps]]
+command = "ChooseSelected"
+key_sequence = "l"
+[[keymaps]]
+command = "LyricsPage"
+key_sequence = ";"
+[[keymaps]]
+command = "PreviousPage"
+key_sequence = "h"

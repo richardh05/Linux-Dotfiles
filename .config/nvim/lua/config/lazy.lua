@@ -43,6 +43,8 @@ require("lazy").setup({
   -- Navigation & Status Line
   { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
   { "nvim-lualine/lualine.nvim" },
+
+  { "rebelot/kanagawa.nvim" },
 })
 
 -- Treesitter Configuration
@@ -63,4 +65,7 @@ require("quarto").setup({
       languages = { "r", "python", "lua" }
   }
 })
+
+require("kanagawa").load("wave")
+
 
