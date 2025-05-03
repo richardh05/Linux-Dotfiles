@@ -1,12 +1,15 @@
 * {
     border: none;
-    border-radius: 0;
+    border-radius: 5;
     min-height: 0;
-    font-family: "Jetbrains Mono Nerd Font";
-    font-weight: 500;
+    font-family: "Ubuntu Nerd Font";
+    font-weight: 400;
     font-size: 14px;
     padding: 0;
+
 }
+
+
 
 window#waybar {
     background: #1d2021;
@@ -18,21 +21,17 @@ tooltip {
     border: 2px solid #7c6f64;
 }
 
-#clock,
-#tray,
-#cpu,
-#memory,
-#battery,
-#network,
-#pulseaudio,
-#backlight {
-    margin: 6px 6px 6px 0px;
-    padding: 2px 8px;
+.module {
+    background-color: #ddc7a1;
+    border: 2px solid #c7ab7a;
+    color: #1d2021;
+    margin: 1px 0px;
+    padding: 2px 2px;
 }
 
 #workspaces {
     background-color: #303536;
-    margin: 6px 0px 6px 6px;
+    /* margin: 3px 3px; */
     border: 2px solid #434a4c;
 }
 
@@ -40,13 +39,17 @@ tooltip {
     all: initial;
     min-width: 0;
     box-shadow: inset 0 -3px transparent;
-    padding: 2px 4px;
+    padding: 3px 3px;
     color: #c7ab7a;
 }
 
 #workspaces button.active {
     background-color: #ddc7a1;
     color: #303536;
+}
+z1
+#workspaces button label {
+    font-family: "Jetbrains Mono Nerd Font"
 }
 
 #workspaces button.urgent {
@@ -70,28 +73,12 @@ tooltip {
     color: #6c782e;
 }
 
-#cpu,
-#memory,
-#network,
-#pulseaudio,
-#clock,
-#backlight {
-    background-color: #ddc7a1;
-    border: 2px solid #c7ab7a;
-    color: #1d2021;
-}
+ 
 
 #cpu.critical,
-#memory.critical {
-    background-color: #ddc7a1;
-    border: 2px solid #c7ab7a;
-    color: #c14a4a;
-}
-
+#memory.critical,
 #battery.warning,
 #battery.critical,
 #battery.urgent {
-    background-color: #ddc7a1;
-    border: 2px solid #c7ab7a;
     color: #c14a4a;
 }
