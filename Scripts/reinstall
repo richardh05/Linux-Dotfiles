@@ -1,0 +1,33 @@
+#!/usr/bin/bash
+
+sudo pacman -Syu
+echo "Are you using a laptop? (y/n)"
+read laptop
+if test "$laptop" = "y"; then
+	echo "OK, installing brightness and battery packages"
+	sudo pacman -S brightnessctl 
+elif test "$laptop" = "n"; then
+	echo "OK, skipping brightness and battery packages"
+else
+	echo "Not an options"
+	exit
+fi
+
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+rm -rf yay
+
+sudo echo "QT_QPA_PLATFORMTHEME=qt5ct" >> /etc/environment
+localectl set-x11-keymap gb "" "" caps:swapescape
+systemctl --now --user enable syncthing.service
+systemctl --now --user enable pipewire-pulse.socket
+sudo systemctl enable --now ly
+chsh -s /usr/bin/fish
+mkdir ~/Screenshots/
+
+# setup gnupg with XDF spec
+mkdir ~/.config/gnupg
+chmod 700 ~/.config/gnupg
+

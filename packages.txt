@@ -6,6 +6,7 @@ base
 base-devel
 bemenu
 biber
+bleachbit
 blueman
 bluez
 bluez-utils
@@ -63,7 +64,6 @@ linux-lts-headers
 lxappearance-gtk3
 lxqt-powermanagement
 ly
-neofetch
 neovim
 network-manager-applet
 networkmanager
@@ -75,14 +75,16 @@ ntfs-3g
 obsidian
 openvpn
 openvpn3
-pandoc-cli
+pacman-contrib
 papirus-icon-theme
 pavucontrol
 picom
 pipewire-alsa
 pipewire-pulse
+python-dash
 python-pandas
 python-pip
+python-plotly
 qbittorrent
 qdirstat
 qjackctl
@@ -175,3 +177,4 @@ yay
 yt-dlp
 zen-browser-bin
 zotero
+zoxide

@@ -151,4 +151,11 @@
         "format-icons": ["", "", ""],
         "tooltip-format": "{volume}%: {node_name}"
     },
+
+    "backlight/slider": {
+    "min": 1,
+    "max": 100,
+    "orientation": "vertical",
+    "device": "intel_backlight"
+    }
 }

@@ -1,6 +1,9 @@
+#!/usr/bin/env python3
 import re
 import sys
 import time
+import shutil
+import subprocess
 from pathlib import Path
 from collections import defaultdict
 
@@ -84,11 +87,66 @@ def removeOldFiles(path:Path, days: int = 30, dry_run: bool = False) -> None:
         except Exception as e:
             print(f"Error processing {item}: {e}")
 
+def relocateVPNCerts(destDir:Path):
+    srcDir = Path.home() / ".cert" / "nm-openvpn"
+    destDir = Path(destDir).expanduser().resolve()
+
+    if not srcDir.exists():
+        print(f"No new VPNs since last run: directory {srcDir} does not exist.")
+        return
+
+    destDir.mkdir(parents=True, exist_ok=True)
+
+    # Move cert files
+    for item in srcDir.iterdir():
+        if item.is_file():
+            shutil.move(str(item), str(destDir / item.name))
+            print(f"Moved {item.name} to {destDir}")
+
+    # Get VPN connections
+    try:
+        result = subprocess.run(
+            ["nmcli", "-t", "-f", "NAME,TYPE", "connection", "show"],
+            stdout=subprocess.PIPE, text=True, check=True
+        )
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to list connections: {e}")
+        return
+
+    connections = [
+        line.split(":")[0] for line in result.stdout.splitlines()
+        if "vpn" in line
+    ]
+
+    # Modify each VPN connection
+    for name in connections:
+        for cert_type in ("ca", "cert", "key","tls-auth","tls-crypt"):
+            for file in destDir.glob(f"*{cert_type}*"):
+                subprocess.run([
+                    "nmcli", "connection", "modify", name,
+                    f"+vpn.data", f"{cert_type}={file}"
+                ])
+                print(f"Set {cert_type}={file} for VPN '{name}'")
+
+    print("All VPN connections updated.")
+
+    # Remove source directory (and parents) if empty
+    while srcDir != Path("~").expanduser().resolve() and srcDir != srcDir.parent:
+        try:
+            srcDir.rmdir()  # Removes directory if empty
+            print(f"Deleted {srcDir}")
+            srcDir = srcDir.parent
+        except OSError:
+            break  # Directory not empty or other error
+
 
 def main():
     pacmanCache(Path("/var/cache/pacman/pkg"),3)
     removeOldFiles(Path("/home/richard/.local/share/Trash/files/"),30,False)
     removeOldFiles(Path("/home/richard/.cache/"),30,False)
+    relocateVPNCerts(Path("~/.config/nm-openvpn-certs"))
+    if Path("~/.gtkrc-2.0").expanduser().is_file():
+        Path("~/.gtkrc-2.0").expanduser().unlink()
 
 
 if __name__ == "__main__":

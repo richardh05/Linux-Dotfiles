@@ -2,8 +2,6 @@
 # VERSION: 3.0
 SETUVAR --export FONT_FAMILY:VictorMono\x20Nerd\x20Font\x20Mono
 SETUVAR --export QT_QPA_PLATFORMTHEME:qt5ct
-SETUVAR --export R_HOME:\x7e/\x2econfig/R
-SETUVAR --export R_LIBS_USER:\x7e/\x2econfig/R/x86_64\x2dpc\x2dlinux\x2dgnu\x2dlibrary/\x25v
 SETUVAR __fish_initialized:3800
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr
@@ -34,4 +32,3 @@ SETUVAR fish_pager_color_description:yellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/home/richard/\x2edotnet/tools\x1e/home/richard/bin

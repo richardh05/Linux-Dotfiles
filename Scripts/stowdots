@@ -1,5 +1,5 @@
 #!/bin/sh
-REPO='/home/richard/dots/home/'
-pacman -Qeq > ~/dots/home/packages.txt
+REPO='/home/richard/Programming/Dotfiles/'
+pacman -Qeq > $REPO/packages.txt
 stow -d $REPO -t ~/ .
-cd ~/dots/home
+cd $REPO
