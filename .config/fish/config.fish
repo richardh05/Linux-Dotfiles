@@ -16,4 +16,6 @@ abbr spt "spotify_player"
 abbr i3conf "nvim ~/.config/i3/config"
 abbr kittyconf "nvim .config/kitty/kitty.conf"
 abbr fishconf "nvim .config/fish/config.fish"
-abbr removeunused "pacman -Qtdq | sudo pacman -Runs -"
+
+#wants to be at the end
+zoxide init fish | source

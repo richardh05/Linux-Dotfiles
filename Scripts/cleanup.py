@@ -1,0 +1,95 @@
+import re
+import sys
+import time
+from pathlib import Path
+from collections import defaultdict
+
+# Configuration
+DRY_RUN = False  # Set to True to preview deletions
+
+def pacmanCache(path:Path, keep:int) -> None:
+    # Matches e.g. 'bash-5.2.15-1-x86_64.pkg.tar.zst'
+    PKG_RE = re.compile(r"^(?P<name>.+)-\d[^-]*-[^-]*-.*\.pkg\.tar\..+$")
+
+    if not path.is_dir():
+        print(f"Error: {path} does not exist or is not a directory.")
+        sys.exit(1)
+
+    # Group packages by base name
+    packages = defaultdict(list)
+
+    for pkg_file in path.glob("*.pkg.tar.*"):
+        match = PKG_RE.match(pkg_file.name)
+        if not match:
+            continue
+        base = match.group("name")
+        packages[base].append(pkg_file)
+
+    # Process each group
+    deleted_files = []
+
+    for base, files in packages.items():
+        # Sort files by modification time (newest first)
+        files.sort(key=lambda f: f.stat().st_mtime, reverse=True)
+
+        if len(files) > keep:
+            to_delete = files[keep:]
+            for f in to_delete:
+                if DRY_RUN:
+                    print(f"[DRY RUN] Would delete: {f}")
+                else:
+                    try:
+                        f.unlink()
+                        print(f"Deleted: {f}")
+                        deleted_files.append(f)
+                    except Exception as e:
+                        print(f"Failed to delete {f}: {e}", file=sys.stderr)
+
+    if not deleted_files and not DRY_RUN:
+        print("Nothing to delete. Cache is clean.")
+
+def removeOldFiles(path:Path, days: int = 30, dry_run: bool = False) -> None:
+    """
+    Remove files and directories in `directory` not accessed in `days` days.
+
+    Args:
+        directory (str): Path to the directory to scan.
+        days (int): Number of days to use as threshold.
+        dry_run (bool): If True, only print what would be deleted.
+    """
+    now = time.time()
+    cutoff = now - days * 86400  # seconds in a day
+
+    if not path.is_dir():
+        print(f"Error: {path} is not a valid directory.")
+        return
+
+    for item in path.iterdir():
+        try:
+            last_access = item.stat().st_atime
+            if last_access < cutoff:
+                if dry_run:
+                    print(f"[DRY RUN] Would remove: {item}")
+                else:
+                    if item.is_file() or item.is_symlink():
+                        item.unlink()
+                        print(f"Removed file: {item}")
+                    elif item.is_dir():
+                        # Only remove empty dirs
+                        try:
+                            item.rmdir()
+                            print(f"Removed directory: {item}")
+                        except OSError:
+                            print(f"Skipped non-empty directory: {item}")
+        except Exception as e:
+            print(f"Error processing {item}: {e}")
+
+
+def main():
+    pacmanCache(Path("/var/cache/pacman/pkg"),3)
+    removeOldFiles(Path("/home/richard/.local/share/Trash/files/"),30,False)
+    removeOldFiles(Path("/home/richard/.cache/"),30,False)
+
+
+if __name__ == "__main__":
+    main()

@@ -9,6 +9,7 @@ biber
 blueman
 bluez
 bluez-utils
+boost
 bottom
 brightnessctl
 btop
@@ -31,6 +32,7 @@ fzf
 git
 git-filter-repo
 gparted
+grim
 grub
 gruvbox-plus-icon-theme-git
 gtk-engine-murrine
@@ -102,13 +104,6 @@ stow
 sway
 syncthing
 sysstat
-tex-gyre-fonts
-texlive-bibtexextra
-texlive-binextra
-texlive-fontsextra
-texlive-latexextra
-texlive-latexrecommended
-texlive-xetex
 thunar
 thunar-archive-plugin
 thunar-volman
@@ -130,7 +125,7 @@ webcord
 wev
 xarchiver
 xdg-desktop-portal
-xdg-desktop-portal-wlr
+xdg-desktop-portal-hyprland
 xf86-video-vesa
 xfce4-power-manager
 xorg-bdftopcf
@@ -177,7 +172,6 @@ xorg-xwud
 xsel
 xss-lock
 yay
-yay-debug
 yt-dlp
 zen-browser-bin
 zotero
