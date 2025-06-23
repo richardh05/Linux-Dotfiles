@@ -1,0 +1,20 @@
+#!/bin/bash
+
+VSCODE_FOLDER="${HOME}/.vscode"
+code --password-store="gnome-libsecret" --enable-features=UseOzonePlatform --ozone-platform=wayland "$@" &
+VSCODE_PID=$!
+sleep 5
+
+# Check if VS Code is still running before attempting to delete
+if ps -p $VSCODE_PID > /dev/null; then
+    echo "VS Code is still running. Attempting to delete ${VSCODE_FOLDER}."
+    # WARNING: This will delete your extensions and user data for ~/.vscode/
+    rm -rf "${VSCODE_FOLDER}"
+    echo "${VSCODE_FOLDER} deleted."
+else
+    echo "VS Code probably exited before deletion. Deleting ${VSCODE_FOLDER} anyway."
+    rm -rf "${VSCODE_FOLDER}"
+fi
+
+# Exit the wrapper script
+exit 0
