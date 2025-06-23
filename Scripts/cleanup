@@ -2,8 +2,6 @@
 
 import sys
 import time
-import shutil
-import subprocess
 import re
 from pathlib import Path
 from collections import defaultdict
