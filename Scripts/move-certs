@@ -1,0 +1,85 @@
+import subprocess
+from pathlib import Path
+import sys
+
+#1. Get VPN connections
+def getVPNs() -> list[str]:
+    try:
+        result = subprocess.run(
+            ["nmcli", "-t", "-f", "NAME,TYPE", "connection", "show"],
+            stdout=subprocess.PIPE, text=True, check=True
+        )
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to list connections: {e}. Ensure NetworkManager is running and nmcli is available.")
+        sys.exit(1)
+
+    connections = [
+        line.split(":")[0] for line in result.stdout.splitlines()
+        if "vpn" in line # Filter for VPN connections
+    ]
+    return connections
+
+#2. Get the old VPN certificate paths
+def getCertPaths(vpn_name:str) -> dict[str,Path]:
+    vpn_details_cmd = ["nmcli", "-t", "-f", "vpn.data", "connection", "show", vpn_name]
+    vpn_result = subprocess.run(
+        vpn_details_cmd, stdout=subprocess.PIPE, text=True, check=True
+    )
+
+    vpn_cleaned_result = vpn_result.stdout.strip().replace("\\, " , "; ").replace("vpn.data:","")
+    vpn_list = vpn_cleaned_result.split(", ")
+    vpn_dict: dict[str, Path] = { }
+    for s in vpn_list:
+        splitString = s.split(" = ")
+        if splitString[1].startswith("/"): 
+            key = splitString[0]
+            val = Path(splitString[1])
+            vpn_dict[key] = val
+    return vpn_dict
+
+#3. Overwrite the old paths
+def setCertPaths(name:str, vpn_dict:dict[str,Path], destDir:Path):
+    destDir = destDir.expanduser()
+    if (destDir.exists) == False: destDir.mkdir
+    for c, p in vpn_dict.items():
+        newPath = destDir / p.name
+        if p.parent != destDir:
+            print(f"{name}: moving {c} from {p} to {newPath}")
+            p.rename(newPath)
+            modify_command = ["nmcli", "connection", "modify", name, "+vpn.data", f"{c}={newPath.as_posix()}"]
+            subprocess.run(modify_command, check=True)
+        else:
+            print(f"{name} {c} already in destination directory")
+    print(f"{name}: finished updating VPN")
+
+#4. Restart NetworkManager
+# def restart():
+#     try:
+#         subprocess.run(["sudo", "systemctl", "restart", "NetworkManager"], check=True)
+#         print("NetworkManager restarted successfully.")
+#     except subprocess.CalledProcessError as e:
+#         print(f"Failed to restart NetworkManager: {e}. Please restart it manually for changes to take effect.")
+    
+#5. Remove source directory (and parents) if empty
+def removeSrcDir(srcDir:Path):
+    srcDir = srcDir.expanduser()
+    while srcDir != Path("~").expanduser().resolve() and srcDir != srcDir.parent:
+        try:
+            srcDir.rmdir()  # Removes directory if empty
+            print(f"Deleted {srcDir}")
+            srcDir = srcDir.parent
+        except OSError:
+            break  # Directory not empty or other error
+
+
+def main():
+    VPNs = getVPNs()
+    for v in VPNs:
+        paths = getCertPaths(v)
+        setCertPaths(v,paths,Path("~/.config/nm-openvpn-certs"))
+    # restart()
+    removeSrcDir(Path("~/.cert/nm-openvpn/"))
+
+
+if __name__ == "__main__":
+    main()
