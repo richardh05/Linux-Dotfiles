@@ -1,6 +1,6 @@
 //GLOBAL TWEAKS & VARIABLES
 * {
-    bg-col: ${BG};
+    bg-col: #282828;
     //aqua: ${AQUA};
     aqua: #689d68;
     fg-col: #bdae93;
@@ -104,7 +104,7 @@ element selected {
 }
 
 element-text {
-    font: "VictorMono Nerd Font Mono Medium 14";
+    font: "VictorMono Nerd Font Medium 14";
     vertical-align: 0.5;
 }
 

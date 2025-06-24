@@ -1,6 +1,6 @@
 configuration {
     modi: "drun,filebrowser";
-    icon-theme: "Obsidian-aqua";
+    icon-theme: "Papirus-Dark";
     show-icons: true;
     terminal: "kitty";
     drun-display-format: "{name}";

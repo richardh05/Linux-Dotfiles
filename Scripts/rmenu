@@ -1,0 +1,59 @@
+#!/bin/sh
+
+RMENU="rofi"
+apps() {
+    case $RMENU in
+        rofi) rofi -show;;
+        fuzzel) fuzzel;;
+        dmenu) dmenu_run -fn 'Jetbrains Mono:bold:_xelsize=16' -nb $BG -nf $LIGHTGREY -sb $LIGHTGREY -sf $BG -p ' ';;
+    esac
+}
+
+find() {
+    home=$(echo ~/)
+    exclude=""
+    case $RMENU in
+        rofi) filepath=$(fd . ~ | sed "s|$home||g" |
+        rofi -dmenu -i -no-show-icons -p "󰀶 Find");;
+        fuzzel) filepath=$(fd . ~ -E Android/ | sed "s|$home||g" |
+        fuzzel -d -p "󰀶 Find ");;
+        dmenu) filepath=$(fd . ~ | sed "s|$home||g" |
+        dmenu -i -l 20 -fn 'Jetbrains Mono:bold:pixelsize=16' -nb $BG -nf $LIGHTGREY -sb $LIGHTGREY -sf $BG);;
+    esac
+
+    if [ -z "$filepath" ]; then #prevents opening $home on its own
+        exit 0
+    else
+        xdg-open "$home$filepath"
+    fi
+}
+
+power() {
+    s="󰐥 Shutdown\n󰜉 Restart\n󰍃 Logout\n󰌾 Lock\n󰍺 Auto-configure monitors"
+    case $RMENU in
+        rofi) cmd=$(echo -e "$s" | 
+        rofi -dmenu -i -no-show-icons -p "󰐦 Power");;
+        fuzzel) filepath=$(echo -e "$s" |
+        fuzzel -d -p "󰐦 Power");;
+        dmenu) cmd=$(echo -e "$s" | 
+        dmenu -i -fn 'Jetbrains Mono:bold:pixelsize=16' -nb $BG -nf $LIGHTGREY -sb $LIGHTGREY -sf $BG -p "󰐦 Power");;
+    esac
+
+    echo $cmd
+    case $cmd in
+            󰐥\ Shutdown) exec systemctl poweroff;;
+            󰜉\ Restart) exec systemctl reboot;;
+            # Logout) kill -HUP $XDG_SESSION_PID;;
+            󰍃\ Logout) i3-msg exit; hyprctl dispatch exit;;
+            󰌾\ Lock) exec systemctl suspend;;
+            󰍺\ Auto-configure\ monitors) exec fix-monitors;;
+            #Lock) exec systemctl --user start lock.target;;
+    esac
+}
+
+case $1 in
+    apps) apps;;
+    find) find;;
+    power) power;;
+    *) echo "Usage: $0 {apps|find|power}"; exit 1;;
+esac
