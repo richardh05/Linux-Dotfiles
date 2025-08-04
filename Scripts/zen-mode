@@ -1,0 +1,34 @@
+#!/bin/bash
+
+off() {
+ echo "Disabling effects..."
+
+  # Disable animations and transparency
+  hyprctl --batch "\
+        keyword animations:enabled false; \
+        keyword decoration:blur:disable true; \
+        keyword decoration:drop_shadow false; \
+        keyword decoration:rounding 0; \
+        keyword decoration:active_opacity 1.0; \
+        keyword decoration:inactive_opacity 1.0; \
+        keyword decoration:fullscreen_opacity 1.0; \ 
+  "
+
+  # Kill hyprpaper
+  pkill hyprpaper
+}
+
+
+on() {
+	echo "Enabling effects..."
+  hyprpaper &
+	hyprctl reload
+}
+
+
+if pgrep -x "hyprpaper" > /dev/null; then
+	off
+else
+	on
+fi
+
