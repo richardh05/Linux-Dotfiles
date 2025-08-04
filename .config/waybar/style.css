@@ -34,7 +34,7 @@ window#waybar, tooltip {
     all: initial;
     min-width: 0;
     box-shadow: inset 0 -3px transparent;
-    padding: 3px 3px;
+    padding: 2px 3px;
     color: #c7ab7a;
 }
 

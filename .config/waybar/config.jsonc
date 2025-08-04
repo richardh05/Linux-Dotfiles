@@ -1,22 +1,23 @@
 // -*- mode: jsonc -*-
 {
     "layer": "top", // Waybar at top layer
-    "position": "left", // Waybar position (top|bottom|left|right)
-    "width": 20, // Waybar width
-    "spacing": 1, // Gaps between modules (4px)
+    "position": "top", // Waybar position (top|bottom|left|right)
+    // "width": 20, // Waybar width
+    "height": 30,
+    "spacing": 5, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
         "hyprland/workspaces"
     ],
-    // "modules-center": [
-    //     "hyprland/window"
-    // ],
+    "modules-center": [
+        //  "hyprland/window"
+        "clock"
+    ],
     "modules-right": [
         "cpu",
         "backlight",
         "wireplumber",
         "battery",
-        "clock",
         "tray"
     ],
     // Modules configuration
@@ -63,7 +64,7 @@
     "clock": {
     "interval": 60,
     "tooltip": true,
-    "format": "{:%H\n%M}",
+    "format": "{:%H:%M}",
     "tooltip-format": "{:%d %b %Y}"
     },
     "cpu": {
@@ -93,7 +94,7 @@
         },
         "format": "{icon}",
         "format-full": "{icon}",
-        "format-charging": "",
+        "format-charging": "󰂄",
         "format-plugged": "",
         "format-alt": "{time} {icon}",
         // "format-good": "", // An empty format will hide the module
