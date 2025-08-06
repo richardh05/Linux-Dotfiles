@@ -1,6 +1,9 @@
 #theme
 export QT_QPA_PLATFORMTHEME=qt6ct
 
+#hyprshot
+export HYPRSHOT_DIR="/home/richard/Pictures/Screenshots"
+
 #gecko
 export MOZ_CONFIG_DIR="/home/richard/.config/mozilla"
 

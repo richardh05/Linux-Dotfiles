@@ -18,19 +18,25 @@ abbr newsboat "newsboat -u ~/Documents/urls"
 abbr i3conf "nvim ~/.config/i3/config"
 abbr kittyconf "nvim .config/kitty/kitty.conf"
 abbr fishconf "nvim .config/fish/config.fish"
-set -gx PATH "$HOME/Scripts:$HOME/.local/share/JetBrains/Toolbox/scripts:$HOME/.local/share/dotnet:$PATH"
+set -gx PATH "$HOME/Scripts:$HOME/.local/share/JetBrains/Toolbox/scripts:$HOME/.local/share/dotnet:$HOME/.local/bin:$PATH"
 
 if test -f ~/.profile
-    # This is a hacky way to run Bash commands and get their exports into Fish
-    # It's not perfect and won't handle all Bash constructs, but works for simple exports.
-    for line in (bash -c 'source ~/.profile; printenv' | grep '=')
-        # Split line at the first '='
-        set -l key (echo "$line" | cut -d'=' -f1)
-        set -l value (echo "$line" | cut -d'=' -f2-)
-        # Export the variable in Fish
-        set -gx "$key" "$value"
+    # Use 'declare -p' to get a scriptable output of variables from a Bash subshell.
+    # The grep commands filter out problematic variables that cause errors in Fish.
+    set --local profile_vars (bash -c 'source ~/.profile; declare -p' | grep -E '^declare --' | grep -vE '^declare -- (BASH|COMP|DIRSTACK|EPOCH|EUID|FUNCNAME|GROUPS|HOME|HOSTNAME|HOSTTYPE|IFS|LANG|LC|LINENO|MACHTYPE|MAILCHECK|OLDPWD|OPTERR|OPTIND|OSTYPE|PATH|PIPESTATUS|PPID|PROMPT_COMMAND|PS1|PS2|PS3|PS4|PWD|RANDOM|SECONDS|SHELL|SHLVL|TERM|TMOUT|UID|_)')
+
+    for line in $profile_vars
+        # Use string replace to get the key and value
+        set --local key (string replace -r '^declare --x? ([^=]+)=.*' '$1' "$line")
+        set --local key (string replace -r '^declare -- ([^=]+)=.*' '$1' "$line")
+        set --local value (string replace -r '^declare --x? [^=]+="(.*)"$' '$1' "$line")
+        set --local value (string replace -r '^declare -- [^=]+="(.*)"$' '$1' "$line")
+
+        # Set and export the variable in Fish
+        if not string match -q '_=' "$line"
+            set -gx "$key" "$value"
+        end
     end
 end
-
 #wants to be at the end
 zoxide init fish | source
