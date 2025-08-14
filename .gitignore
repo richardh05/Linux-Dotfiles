@@ -1,3 +1,4 @@
 .config/nvim/lazy-lock.json
 .config/Thunar/accels.scm
 .vscode
+machine.conf

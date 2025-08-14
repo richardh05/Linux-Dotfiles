@@ -1,5 +1,17 @@
 #!/bin/sh
 REPO='/home/richard/Programming/Dotfiles/'
-pacman -Qeq > $REPO/packages.txt
 stow -d $REPO -t ~/ .
+
+HOSTNAME=$(cat /etc/hostname)
+case "$HOSTNAME" in
+  "rht480s")
+    echo 'source = ~/.config/hypr/hyprland-laptop.conf' > ~/.config/hypr/machine.conf
+    ;;
+  "rhITX")
+    echo 'source = ~/.config/hypr/hyprland-desktop.conf' > ~/.config/hypr/machine.conf
+    ;;
+  *)
+    echo "Unknown host: $HOSTNAME" >&2
+    ;;
+esac
 cd $REPO
