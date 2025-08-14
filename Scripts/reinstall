@@ -1,33 +1,207 @@
 #!/usr/bin/bash
+essentials="base base-devel efibootmgr fastfetch fish git gnome-keyring grub keepassxc kitty ly networkmanager pipewire-alsa pipewire-pulse sof-firmware stow syncthing"
+laptop="brightnessctl linux-firmware-intel linux-firmware-whence intel-ucode"
 
-sudo pacman -Syu
-echo "Are you using a laptop? (y/n)"
-read laptop
-if test "$laptop" = "y"; then
-	echo "OK, installing brightness and battery packages"
-	sudo pacman -S brightnessctl 
-elif test "$laptop" = "n"; then
-	echo "OK, skipping brightness and battery packages"
-else
-	echo "Not an options"
-	exit
-fi
+declare -A kernels=(
+  ["linux"]="linux linux-headers"
+  ["linux-lts"]="linux-lts linux-lts-headers"
+  ["linux-zen"]="linux-zen linux-zen-headers"
+)
 
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
-rm -rf yay
+declare -A window_managers=(
+	["Hyprland"]="hyprland hyprlock hypridle hyprpaper hyprpolkitagent hyprshot waybar wl-clipboard rofi-wayland swaync xdg-desktop-portal-hyprland wev network-manager-applet"
+	["i3"]="i3wm i3blocks i3lock autotiling xsel xss-lock nitrogen flameshot autotiling picom dunst rofi-wayland network-manager-applet",
+)
 
-sudo echo "QT_QPA_PLATFORMTHEME=qt5ct" >> /etc/environment
-localectl set-x11-keymap gb "" "" caps:swapescape
-systemctl --now --user enable syncthing.service
-systemctl --now --user enable pipewire-pulse.socket
-sudo systemctl enable --now ly
-chsh -s /usr/bin/fish
-mkdir ~/Screenshots/
+declare -A file_managers=(
+  ["Nautilus"]="nautilus gvfs-mtp"
+  ["Thunar"]="thunar thunar-archive-plugin thunar-volman tumbler gvfs gvfs-mtp"
+  ["Yazi"]="yazi"
+  ["File Roller"]="file-roller"
+)
 
-# setup gnupg with XDF spec
-mkdir ~/.config/gnupg
-chmod 700 ~/.config/gnupg
+declare -A file_systems=(
+  ["FAT32"]="dosfstools"
+  ["exFAT"]="exfatprogs"
+  ["NTFS"]="ntfs-3g"
+)
+
+declare -A browsers=(
+  ["Firefox"]="firefox firefox-i18n-en-gb"
+  ["Chromium"]="chromium"
+  ["Vivaldi"]="vivaldi"
+  ["Zen Browser"]="zen-browser-bin"
+)
+
+declare -A fonts=(
+  ["Noto Fonts"]="noto-fonts noto-fonts-cjk noto-fonts-emoji"
+  ["JetBrains Mono Nerd Font"]="ttf-jetbrains-mono-nerd"
+  ["Ubuntu Font"]="ttf-ubuntu-nerd"
+  ["Victor Mono"]="ttf-victor-mono-nerd"
+)
+
+declare -A code_editors=(
+  ["Neovim"]="neovim"
+  ["Visual Studio Code"]="visual-studio-code-bin"
+  ["zed"]="zed"
+  ["Jetbrains Toolbox"]="jetbrains-toolbox"
+  ["SQLite Browser"]="sqlitebrowser"
+  ["Jupyter Lab"]="jupyterlab"
+)
+
+declare -A programming=(
+  ["Python"]="python python-pip python-dash python-matplotlib python-pandas python-pipx python-plotly python-pytest python-pytest-cov ruff basedpyright"
+  ["Rust"]="rustup rust-analyzer"
+  ["R"]="r rstudio-desktop-bin"
+  ["Hugo"]="hugo"
+)
+
+declare -A activities=(
+  ["Notes"]="obsidian"
+  ["Gaming"]="steam steam-native-runtime steam-mesa"
+  ["Music"]="spotify-player"
+  ["Video"]="newsboat mpv yt-dlp"
+  ["Chat"]="webcord signal-desktop"
+  ["Academics"]="libreoffice-still quarto-cli-bin zotero"
+  ["OSINT"]="perl-image-exiftool"
+)
+
+declare -A extras=(
+  ["GNOME images, system monitor, disk stats, disk utility"]="loupe gnome-system-monitor baobab gnome-disk-utility"
+  ["TUI images, system monitor, disk stats, git client"]="imv htop btop gdu lazygit"
+  ["Bluetooth"]="bluez bluez-utils blueman"
+  ["VPN Support"]="openvpn networkmanager-openvpn"
+  ["Theming"]="nwg-look papirus-icon-theme qt6ct qt5ct"
+  ["CLI helpers"]="fd fzf zoxide tree pacman-contrib"
+)
+
+# Test which packages are installed on this system, but not covered in this script.
+# This is useful for finding packages that are not in the script, but should be.
+check_unlisted_packages() {
+    local allowed="yay $essentials $laptop ${kernels[@]} ${window_managers[@]} ${file_managers[@]} ${file_systems[@]} ${browsers[@]} ${fonts[@]} ${code_editors[@]} ${programming[@]} ${activities[@]} ${extras[@]}"
+    local installed
+    installed=$(pacman -Qeq)
+
+    # Convert allowed list to a regex pattern with word boundaries
+    local pattern="(^| )($(echo "$allowed" | tr ' ' '|'))($| )"
+
+    # Loop through installed packages and print ones not in allowed list
+    while IFS= read -r pkg; do
+        if [[ ! " $allowed " =~ (^|[[:space:]])$pkg($|[[:space:]]) ]]; then
+            echo "$pkg"
+        fi
+    done <<< "$installed"
+}
+
+# Clones my dotfiles repository (not used in this script)
+# You'll need to do this manually, as this script is inaccessible if you don't have the dotfiles yet.
+clone_dotfiles() {
+	mkdir ~/Programming
+	git clone https://github.com/richardh05/Linux-Dotfiles.git ~/Programming
+	mv ~/Programming/Linux-Dotfiles ~/Programming/Dotfiles
+	cd ~/Programming/Dotfiles/Scripts
+	./stowdots
+}
+
+# Function to add packages to a list
+# Arguments:
+#   $1: category (string)
+#   $2: packages (array)
+#   $3: package_group (associative array)
+add_packages() {
+    local category=$1 # String message to be 
+    local -n packages="$2"  # Array passed by reference
+    declare -A package_group=("${!3}")  # Associative array passed by reference
+    
+		echo "Please enter the number(s) of the $category packages you'd like:"
+    
+    # Print the available package options with numbers
+    local index=0
+    for key in "${!package_group[@]}"; do
+        echo "$index) $key"
+        ((index++))
+    done
+
+    # Read user input (indices)
+    read -r choices
+
+    # Add selected packages to the packages list
+    for i in "${!package_group[@]}"; do
+        if [[ "$choices" =~ $i ]]; then
+            extraPackages=("${package_group[$i]}")
+            packages+=("${extraPackages[@]}")  # Add selected packages to the array
+        fi
+    done
+
+    # Print the updated packages
+    echo "Updated packages: ${packages[@]}"
+}
+
+install_yay() {
+	git clone https://aur.archlinux.org/yay.git
+	cd yay
+	makepkg -si
+	cd ..
+	rm -rf yay
+}
+
+essentials_setup() {
+	sudo pacman -Syu
+	sudo pacman -S --needed "$essentials"
+
+	chsh -s /usr/bin/fish
+	systemctl --user --now enable syncthing.service
+	systemctl --user --now enable pipewire pipewire-pulse wireplumber
+    sudo systemctl enable ly
+}
+
+enable32bit() {
+    # Find the line number after #[multilib]
+    INCLUDE_LINE=$(sudo awk '/#[multilib]/ {print NR + 1; exit}' /etc/pacman.conf)
+    
+    # Check if we found the #[multilib] section
+    if [ -z "$INCLUDE_LINE" ]; then
+        echo "Error: #[multilib] section not found in /etc/pacman.conf"
+        return 1
+    fi
+
+    # Enable multilib section
+    sudo sed -i 's/#[multilib]/[multilib]/' /etc/pacman.conf
+    
+    # Insert Include line at the correct position
+    sudo sed -i "${INCLUDE_LINE}s|.*|Include = /etc/pacman.d/mirrorlist/" /etc/pacman.conf
+}
+
+main() {
+    essentials_setup
+    enable32bit
+
+    # Install yay for AUR packages
+    install_yay
+
+    packages=()
+    add_packages "window manager" packages window_managers
+    add_packages "file manager" packages file_managers
+
+    yay -S "${packages[@]}" --noconfirm --needed
+    sudo grub-mkconfig -o /boot/grub/grub.cfg # load extra kernels
+    sudo fc-cache -fv # update font cache
+
+    sudo echo "QT_QPA_PLATFORMTHEME=qt6ct" >> /etc/environment # system-wide qt theming
+    localectl set-x11-keymap gb "" "" caps:swapescape
+    mkdir ~/Screenshots/
+    # setup gnupg with XDG spec
+    mkdir ~/.config/gnupg
+    chmod 700 ~/.config/gnupg
+
+    echo "Done! Make sure you:"
+    echo "1. Set up shared folders with syncthing at http://localhost:8384/"
+}
+
+case $1 in
+  test) check_unlisted_packages;;
+esac
+
+
+
 

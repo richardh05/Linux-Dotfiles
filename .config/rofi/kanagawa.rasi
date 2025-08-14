@@ -8,8 +8,7 @@
     black: #191919;
 
     width: 600;
-    //font: "Ubuntu Nerd Font Medium 14";
-    font: "VictorMono Nerd Font Medium 16";
+    font: "Noto Serif Bold 16";
     border-radius: 10px;
     background-color: @bg-col;
 }
@@ -23,7 +22,7 @@ element-text, element-icon , mode-switcher, button {
 
 
 window {
-    height: 618px;
+    height: 580px;
 	border-radius: 10px;
     padding: 5px;
 }
@@ -104,7 +103,7 @@ element selected {
 }
 
 element-text {
-    font: "VictorMono Nerd Font Medium 14";
+    font: "Noto Serif Regular 14";
     vertical-align: 0.5;
 }
 
